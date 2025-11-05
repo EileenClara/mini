@@ -1,47 +1,67 @@
+<!-- 顶部导航栏 -->
 <nav nav-type="search" />
 
+<!-- 页面主容器 -->
 <view class="home-container">
   <view class="home-content">
+
+    <!-- 标签页切换 -->
     <t-tabs defaultValue="recommend">
+
+      <!-- 推荐美食 -->
       <t-tab-panel label="推荐美食" value="recommend">
         <t-pull-down-refresh
           value="{{enable}}"
           bind:refresh="onRefresh"
           loadingTexts="{{['下拉刷新', '松手刷新', '正在刷新', '刷新完成']}}"
         >
-          <view class="home-card-list" style="height: 1589rpx; display: flex; box-sizing: border-box">
+
+          <!-- ✅ 轮播图 -->
+          <view class="swiper-wrapper">
             <t-swiper
               list="{{swiperList}}"
+              keyName="image"
               navigation="{{ { type: 'dots-bar' } }}"
-              height="488rpx"
-              style="width: 340rpx"
+              height="400rpx"
+              autoplay
             />
+          </view>
+
+          <!-- ✅ 卡片列表 -->
+          <view class="home-card-list">
             <block wx:for="{{cardInfo}}" wx:key="id">
               <card
+                id="{{item.id}}"
                 desc="{{item.desc}}"
                 url="{{item.url}}"
                 tags="{{item.tags}}"
+                bind:tapcard="goDetail"
               />
             </block>
           </view>
         </t-pull-down-refresh>
       </t-tab-panel>
 
+      <!-- 我的关注 -->
       <t-tab-panel label="我的关注" value="follow">
         <view class="home-card-list">
           <block wx:for="{{focusCardInfo}}" wx:key="id">
             <card
+              id="{{item.id}}"
               desc="{{item.desc}}"
               url="{{item.url}}"
               tags="{{item.tags}}"
+              bind:tapcard="goDetail"
             />
           </block>
         </view>
       </t-tab-panel>
+
     </t-tabs>
   </view>
 </view>
 
+<!-- 发布按钮 -->
 <view class="home-release">
   <t-button
     theme="primary"
@@ -54,4 +74,5 @@
   </t-button>
 </view>
 
+<!-- 全局消息提示 -->
 <t-message id="t-message" />

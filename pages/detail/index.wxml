@@ -1,0 +1,37 @@
+<view class="detail-container">
+  <!-- 帖子图片 -->
+  <image class="detail-image" src="{{detail.url}}" mode="aspectFill" />
+
+  <!-- 标题 -->
+  <view class="detail-title">{{detail.title}}</view>
+  <view class="detail-author">发布者：{{detail.author}}</view>
+
+  <!-- 描述 -->
+  <view class="detail-desc">{{detail.desc}}</view>
+
+  <t-divider>评论区</t-divider>
+
+  <!-- 评论列表 -->
+  <view class="comment-list">
+    <block wx:for="{{comments}}" wx:key="index">
+      <view class="comment-item">
+        <view class="comment-user">{{item.user}}</view>
+        <view class="comment-content">{{item.content}}</view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 输入评论 -->
+  <view class="comment-input">
+    <t-input
+      placeholder="说点什么吧～"
+      value="{{inputValue}}"
+      bind:change="onInput"
+      clearable
+      style="flex:1"
+    />
+    <t-button theme="primary" size="small" bindtap="sendComment">发送</t-button>
+  </view>
+
+  <t-message id="t-message" />
+</view>
